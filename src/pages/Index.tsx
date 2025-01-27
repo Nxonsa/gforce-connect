@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import Services from '../components/Services';
 
 const Index = () => {
   useEffect(() => {
@@ -11,6 +12,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
+      <Services />
     </div>
   );
 };
