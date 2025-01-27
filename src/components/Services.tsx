@@ -56,16 +56,25 @@ const Services = () => {
   return (
     <section id="services" className="py-20 bg-light">
       <div className="container mx-auto px-6">
-        <h2 className="text-4xl font-bold text-center text-dark mb-12">Our Services</h2>
+        <h2 className="text-4xl font-bold text-center text-dark mb-12 animate-fade-in hover:text-primary transition-colors duration-300">
+          Our Services
+        </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service, index) => (
             <div 
               key={index}
-              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 text-center"
+              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 text-center transform hover:scale-105 animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
-              {service.icon}
-              <h3 className="text-xl font-semibold mb-3 text-primary">{service.title}</h3>
-              <p className="text-secondary">{service.description}</p>
+              <div className="animate-float">
+                {service.icon}
+              </div>
+              <h3 className="text-xl font-semibold mb-3 text-primary hover:text-dark transition-colors duration-300">
+                {service.title}
+              </h3>
+              <p className="text-secondary hover:text-primary transition-colors duration-300">
+                {service.description}
+              </p>
             </div>
           ))}
         </div>

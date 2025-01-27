@@ -28,14 +28,14 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center animate-fade-in">
             <img 
               src="/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png" 
               alt="G-Force Logo" 
-              className="h-12"
+              className="h-12 hover:scale-105 transition-transform duration-300"
             />
           </Link>
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 animate-slide-in">
             <NavLink to="/">Home</NavLink>
             <NavLink to="/" onClick={() => scrollToSection('services')}>Services</NavLink>
             <NavLink to="/about">About</NavLink>
@@ -46,16 +46,16 @@ const Navbar = () => {
             <NavLink to="/contact">Contact</NavLink>
           </div>
           <button 
-            className="md:hidden text-white"
+            className="md:hidden text-white hover:scale-110 transition-transform duration-300"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={24} className="animate-spin" /> : <Menu size={24} className="animate-pulse" />}
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-secondary shadow-lg">
+          <div className="md:hidden absolute top-full left-0 w-full bg-secondary shadow-lg animate-slide-in">
             <div className="flex flex-col space-y-4 px-6 py-4">
               <NavLink to="/" onClick={() => setIsOpen(false)}>Home</NavLink>
               <NavLink to="/" onClick={() => scrollToSection('services')}>Services</NavLink>
@@ -77,7 +77,7 @@ const NavLink = ({ to, children, onClick }: { to: string; children: React.ReactN
   <Link
     to={to}
     onClick={onClick}
-    className="text-white hover:text-light transition-colors duration-200 font-medium"
+    className="text-white hover:text-light transition-all duration-300 font-medium hover:scale-110 transform"
   >
     {children}
   </Link>
