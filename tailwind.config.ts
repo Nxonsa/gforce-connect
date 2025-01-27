@@ -19,6 +19,11 @@ export default {
     },
     extend: {
       colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: "#9b87f5",
         secondary: "#7E69AB",
         dark: "#1A1F2C",
