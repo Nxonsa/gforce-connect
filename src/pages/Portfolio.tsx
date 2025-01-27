@@ -30,7 +30,6 @@ const Portfolio = () => {
 
   const handleDownload = () => {
     simulateDownload();
-    // Replace with actual image URL
     const imageUrl = '/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png';
     const link = document.createElement('a');
     link.href = imageUrl;
@@ -41,7 +40,6 @@ const Portfolio = () => {
   };
 
   const handleView = () => {
-    // Replace with actual image URL
     window.open('/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png', '_blank');
   };
 
@@ -50,18 +48,18 @@ const Portfolio = () => {
       <Navbar />
       <div className="pt-24 md:pt-32">
         <div className="container mx-auto px-6">
-          <h1 className="text-4xl font-bold text-center text-dark mb-12">Our Portfolio</h1>
+          <h1 className="text-4xl font-bold text-center text-dark mb-12 animate-fade-in">Our Portfolio</h1>
           
-          <div className="max-w-2xl mx-auto bg-light p-8 rounded-lg shadow-lg">
+          <div className="max-w-2xl mx-auto bg-light p-8 rounded-lg shadow-lg animate-scale-in hover:scale-105 transition-transform duration-300">
             <div className="mb-8">
               <img 
                 src="/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png"
                 alt="G-Force Portfolio"
-                className="w-full h-auto rounded-lg mb-6"
+                className="w-full h-auto rounded-lg mb-6 animate-fade-in hover:shadow-xl transition-shadow duration-300"
               />
               
               {isDownloading && (
-                <div className="mb-6">
+                <div className="mb-6 animate-fade-in">
                   <Progress value={downloadProgress} className="w-full h-2" />
                   <p className="text-sm text-secondary mt-2">
                     Downloading: {downloadProgress}%
@@ -72,18 +70,18 @@ const Portfolio = () => {
               <div className="flex gap-4">
                 <button
                   onClick={handleView}
-                  className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-dark transition-colors"
+                  className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-dark transition-colors animate-slide-up"
                   disabled={isDownloading}
                 >
-                  <Eye size={20} />
+                  <Eye size={20} className="animate-pulse" />
                   View Image
                 </button>
                 <button
                   onClick={handleDownload}
-                  className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors"
+                  className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors animate-slide-up"
                   disabled={isDownloading}
                 >
-                  <Download size={20} />
+                  <Download size={20} className="animate-pulse" />
                   Download Image
                 </button>
               </div>
