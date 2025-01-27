@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Navbar from '../components/Navbar';
 import { Download, Eye } from 'lucide-react';
+import { Progress } from "@/components/ui/progress";
+import { toast } from "@/components/ui/use-toast";
 
 const Portfolio = () => {
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -15,6 +17,10 @@ const Portfolio = () => {
         if (prev >= 100) {
           clearInterval(interval);
           setIsDownloading(false);
+          toast({
+            title: "Download Complete",
+            description: "Your image has been downloaded successfully.",
+          });
           return 100;
         }
         return prev + 10;
@@ -24,19 +30,19 @@ const Portfolio = () => {
 
   const handleDownload = () => {
     simulateDownload();
-    // Replace with actual PDF URL
-    const pdfUrl = '/path-to-your-pdf.pdf';
+    // Replace with actual image URL
+    const imageUrl = '/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png';
     const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.download = 'g-force-portfolio.pdf';
+    link.href = imageUrl;
+    link.download = 'g-force-portfolio.png';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   };
 
   const handleView = () => {
-    // Replace with actual PDF URL
-    window.open('/path-to-your-pdf.pdf', '_blank');
+    // Replace with actual image URL
+    window.open('/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png', '_blank');
   };
 
   return (
@@ -48,17 +54,18 @@ const Portfolio = () => {
           
           <div className="max-w-2xl mx-auto bg-light p-8 rounded-lg shadow-lg">
             <div className="mb-8">
-              <h2 className="text-2xl font-semibold text-dark mb-4">Company Portfolio</h2>
-              <p className="text-secondary mb-6">
-                Download our comprehensive portfolio to learn more about our services and success stories.
-              </p>
+              <img 
+                src="/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png"
+                alt="G-Force Portfolio"
+                className="w-full h-auto rounded-lg mb-6"
+              />
               
               {isDownloading && (
-                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-                  <div 
-                    className="bg-accent h-2.5 rounded-full transition-all duration-500"
-                    style={{ width: `${downloadProgress}%` }}
-                  ></div>
+                <div className="mb-6">
+                  <Progress value={downloadProgress} className="w-full h-2" />
+                  <p className="text-sm text-secondary mt-2">
+                    Downloading: {downloadProgress}%
+                  </p>
                 </div>
               )}
 
@@ -69,7 +76,7 @@ const Portfolio = () => {
                   disabled={isDownloading}
                 >
                   <Eye size={20} />
-                  View PDF
+                  View Image
                 </button>
                 <button
                   onClick={handleDownload}
@@ -77,7 +84,7 @@ const Portfolio = () => {
                   disabled={isDownloading}
                 >
                   <Download size={20} />
-                  Download PDF
+                  Download Image
                 </button>
               </div>
             </div>
