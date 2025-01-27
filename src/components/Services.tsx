@@ -2,7 +2,7 @@ import {
   BookOpen, 
   Briefcase, 
   GraduationCap, 
-  DollarSign, 
+  Coins, 
   User, 
   Projector, 
   Users, 
@@ -27,7 +27,7 @@ const Services = () => {
       description: "Developing skills and training workforces to be the best they can."
     },
     {
-      icon: <DollarSign className="w-12 h-12 mb-4 text-primary" />,
+      icon: <Coins className="w-12 h-12 mb-4 text-primary" />,
       title: "Debt Collections",
       description: "Get your money back on time."
     },
