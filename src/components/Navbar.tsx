@@ -18,8 +18,12 @@ const Navbar = () => {
     }`}>
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-bold text-dark">
-            G-Force
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png" 
+              alt="G-Force Logo" 
+              className="h-12"
+            />
           </Link>
           <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/">Home</NavLink>
@@ -31,7 +35,7 @@ const Navbar = () => {
             <NavLink to="/vacancies">Vacancies</NavLink>
             <NavLink to="/contact">Contact</NavLink>
           </div>
-          <button className="md:hidden">
+          <button className="md:hidden text-primary">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -45,7 +49,7 @@ const Navbar = () => {
 const NavLink = ({ to, children }: { to: string; children: React.ReactNode }) => (
   <Link
     to={to}
-    className="text-dark/80 hover:text-primary transition-colors duration-200 font-medium"
+    className="text-primary hover:text-secondary transition-colors duration-200 font-medium"
   >
     {children}
   </Link>
