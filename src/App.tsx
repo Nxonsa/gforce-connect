@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Portfolio from './pages/Portfolio';
+import SubmitCV from './pages/SubmitCV';
 import About from './pages/About';
 import Media from './pages/Media';
 import Vacancies from './pages/Vacancies';
@@ -21,6 +22,7 @@ function App() {
             </>
           } />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/submit-cv" element={<SubmitCV />} />
           <Route path="/about" element={<About />} />
           <Route path="/media" element={<Media />} />
           <Route path="/vacancies" element={<Vacancies />} />

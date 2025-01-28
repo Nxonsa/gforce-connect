@@ -16,7 +16,7 @@ const Navbar = () => {
   }, []);
 
   const handleCVSubmit = () => {
-    navigate('/portfolio');
+    navigate('/submit-cv');
     setIsOpen(false);
   };
 
@@ -51,7 +51,6 @@ const Navbar = () => {
               Submit CV
             </button>
             <NavLink to="/vacancies">Vacancies</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
           </div>
           <button 
             className="md:hidden text-white hover:scale-110 transition-transform duration-300"
@@ -77,7 +76,6 @@ const Navbar = () => {
                 Submit CV
               </button>
               <NavLink to="/vacancies" onClick={() => setIsOpen(false)}>Vacancies</NavLink>
-              <NavLink to="/contact" onClick={() => setIsOpen(false)}>Contact</NavLink>
             </div>
           </div>
         )}
