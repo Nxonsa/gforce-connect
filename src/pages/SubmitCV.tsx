@@ -4,7 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
 import { Input } from "@/components/ui/input";
 import confetti from 'canvas-confetti';
-import { FileUpload, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 
 const SubmitCV = () => {
   const { toast } = useToast();
