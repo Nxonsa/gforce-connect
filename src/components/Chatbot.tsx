@@ -7,6 +7,27 @@ const Chatbot = () => {
   const [messages, setMessages] = useState<Array<{ text: string; isUser: boolean }>>([]);
   const [inputText, setInputText] = useState('');
 
+  const contactInfo = {
+    kzn: `KZN Office:
+    031 023 0487
+    info@gforcesolutions.org.za
+    Unit 10, Gillitts Centre,
+    4 Clifton Road
+    Gillitts, 3610`,
+    gauteng: `Gauteng Office:
+    031 023 0487
+    info@gforcesolutions.org.za
+    435 Strauss Crescent
+    Wadeville, Germiston 07
+    1422`,
+    pretoria: `Pretoria Office:
+    031 023 0487
+    info@gforcesolutions.org.za
+    1204 Twin Palms
+    Olympus, Pretoria East
+    0184`
+  };
+
   const handleSend = async () => {
     if (!inputText.trim()) return;
 
@@ -14,18 +35,36 @@ const Chatbot = () => {
     setMessages(prev => [...prev, userMessage]);
     setInputText('');
 
-    // Simulate bot response based on keywords
+    // Enhanced bot response logic
     let botResponse = '';
     const lowercaseInput = inputText.toLowerCase();
 
-    if (lowercaseInput.includes('job') || lowercaseInput.includes('career') || lowercaseInput.includes('position')) {
-      botResponse = "We connect exceptional talent with outstanding opportunities. Visit our 'Find Jobs' section to explore current openings.";
-    } else if (lowercaseInput.includes('cv') || lowercaseInput.includes('resume')) {
-      botResponse = "You can submit your CV through our 'Submit CV' button on the homepage. We'll review it and match you with suitable positions.";
-    } else if (lowercaseInput.includes('contact') || lowercaseInput.includes('reach')) {
-      botResponse = "You can reach us at: support@g-force.com or call us at +1 (555) 123-4567. We're here to help!";
-    } else {
-      botResponse = "I apologize, but I'm not sure about that. Please contact our support team at support@g-force.com or call +1 (555) 123-4567 for more detailed information.";
+    if (lowercaseInput.includes('cv') || lowercaseInput.includes('resume')) {
+      botResponse = "You can generate a professional CV for only R11.45! Our service helps reduce the cost of creating CVs while ensuring high quality. Visit our 'Submit CV' section to get started. We provide a one-page template that's ATS-friendly and easy to customize.";
+    } 
+    else if (lowercaseInput.includes('job') || lowercaseInput.includes('career') || lowercaseInput.includes('position') || lowercaseInput.includes('work')) {
+      botResponse = "We connect exceptional talent with outstanding opportunities. Visit our 'Find Jobs' section to explore current openings. We work with leading companies across various industries.";
+    }
+    else if (lowercaseInput.includes('kzn') || lowercaseInput.includes('durban')) {
+      botResponse = contactInfo.kzn;
+    }
+    else if (lowercaseInput.includes('gauteng') || lowercaseInput.includes('johannesburg')) {
+      botResponse = contactInfo.gauteng;
+    }
+    else if (lowercaseInput.includes('pretoria')) {
+      botResponse = contactInfo.pretoria;
+    }
+    else if (lowercaseInput.includes('contact') || lowercaseInput.includes('office') || lowercaseInput.includes('location')) {
+      botResponse = "We have offices in KZN, Gauteng, and Pretoria. Which location would you like to know more about?";
+    }
+    else if (lowercaseInput.includes('cost') || lowercaseInput.includes('price') || lowercaseInput.includes('fee')) {
+      botResponse = "Our CV generation service costs only R11.45. This includes a professional template and formatting that helps you stand out to employers.";
+    }
+    else if (lowercaseInput.includes('template') || lowercaseInput.includes('format')) {
+      botResponse = "We use a standardized one-page CV template that's proven to be effective. It includes sections for your personal details, work experience, education, and skills - all optimized for ATS systems.";
+    }
+    else {
+      botResponse = "I apologize, but I'm not sure about that. Please contact our support team at info@gforcesolutions.org.za or visit one of our offices:\n\nKZN: 031 023 0487\nGauteng: 031 023 0487\nPretoria: 031 023 0487";
     }
 
     setTimeout(() => {
@@ -45,7 +84,7 @@ const Chatbot = () => {
       {!isOpen && (
         <Button
           onClick={() => setIsOpen(true)}
-          className="rounded-full p-4 bg-accent hover:bg-accent/90 text-white shadow-lg"
+          className="rounded-full p-4 bg-[#74b72e] hover:bg-[#74b72e]/90 text-white shadow-lg"
         >
           <MessageCircle className="h-6 w-6" />
         </Button>
@@ -53,13 +92,13 @@ const Chatbot = () => {
 
       {isOpen && (
         <div className="bg-white rounded-lg shadow-xl w-80 md:w-96 h-[500px] flex flex-col animate-scale-in">
-          <div className="p-4 bg-accent text-white rounded-t-lg flex justify-between items-center">
+          <div className="p-4 bg-[#74b72e] text-white rounded-t-lg flex justify-between items-center">
             <h3 className="font-semibold">G-Force Chat Support</h3>
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsOpen(false)}
-              className="hover:bg-accent/90 text-white"
+              className="hover:bg-[#74b72e]/90 text-white"
             >
               <X className="h-5 w-5" />
             </Button>
@@ -74,7 +113,7 @@ const Chatbot = () => {
                 <div
                   className={`max-w-[80%] p-3 rounded-lg ${
                     message.isUser
-                      ? 'bg-accent text-white'
+                      ? 'bg-[#74b72e] text-white'
                       : 'bg-gray-100 text-gray-800'
                   }`}
                 >
@@ -92,11 +131,11 @@ const Chatbot = () => {
                 onChange={(e) => setInputText(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Type your message..."
-                className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#74b72e]"
               />
               <Button
                 onClick={handleSend}
-                className="bg-accent hover:bg-accent/90 text-white"
+                className="bg-[#74b72e] hover:bg-[#74b72e]/90 text-white"
               >
                 <Send className="h-5 w-5" />
               </Button>
