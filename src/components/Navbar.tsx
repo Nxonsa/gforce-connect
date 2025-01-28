@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,6 +14,11 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleCVSubmit = () => {
+    navigate('/portfolio');
+    setIsOpen(false);
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -41,7 +47,9 @@ const Navbar = () => {
             <NavLink to="/about">About</NavLink>
             <NavLink to="/portfolio">Portfolio</NavLink>
             <NavLink to="/media">In-Media</NavLink>
-            <NavLink to="/cv">Submit CV</NavLink>
+            <button onClick={handleCVSubmit} className="text-white hover:text-light transition-all duration-300 font-medium hover:scale-110 transform">
+              Submit CV
+            </button>
             <NavLink to="/vacancies">Vacancies</NavLink>
             <NavLink to="/contact">Contact</NavLink>
           </div>
@@ -62,7 +70,12 @@ const Navbar = () => {
               <NavLink to="/about" onClick={() => setIsOpen(false)}>About</NavLink>
               <NavLink to="/portfolio" onClick={() => setIsOpen(false)}>Portfolio</NavLink>
               <NavLink to="/media" onClick={() => setIsOpen(false)}>In-Media</NavLink>
-              <NavLink to="/cv" onClick={() => setIsOpen(false)}>Submit CV</NavLink>
+              <button 
+                onClick={handleCVSubmit}
+                className="text-white hover:text-light transition-all duration-300 font-medium hover:scale-110 transform text-left"
+              >
+                Submit CV
+              </button>
               <NavLink to="/vacancies" onClick={() => setIsOpen(false)}>Vacancies</NavLink>
               <NavLink to="/contact" onClick={() => setIsOpen(false)}>Contact</NavLink>
             </div>
