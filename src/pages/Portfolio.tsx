@@ -1,90 +1,113 @@
-import { useState } from 'react';
-import Navbar from '../components/Navbar';
-import { Download, Eye } from 'lucide-react';
-import { Progress } from "@/components/ui/progress";
-import { toast } from "@/components/ui/use-toast";
+import React from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 
 const Portfolio = () => {
-  const [downloadProgress, setDownloadProgress] = useState(0);
-  const [isDownloading, setIsDownloading] = useState(false);
+  const { toast } = useToast();
 
-  const simulateDownload = () => {
-    setIsDownloading(true);
-    setDownloadProgress(0);
-    
-    const interval = setInterval(() => {
-      setDownloadProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          setIsDownloading(false);
-          toast({
-            title: "Download Complete",
-            description: "Your image has been downloaded successfully.",
-          });
-          return 100;
-        }
-        return prev + 10;
-      });
-    }, 500);
-  };
-
-  const handleDownload = () => {
-    simulateDownload();
-    const imageUrl = '/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png';
-    const link = document.createElement('a');
-    link.href = imageUrl;
-    link.download = 'g-force-portfolio.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
-
-  const handleView = () => {
-    window.open('/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png', '_blank');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    toast({
+      title: "CV Submitted",
+      description: "Your CV will be processed. Generation fee: R11.45",
+    });
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-      <div className="pt-24 md:pt-32">
-        <div className="container mx-auto px-6">
-          <h1 className="text-4xl font-bold text-center text-dark mb-12 animate-fade-in">Our Portfolio</h1>
+    <div className="min-h-screen bg-light p-4 md:p-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
+          <h1 className="text-3xl font-bold text-primary mb-6">Submit Your CV</h1>
           
-          <div className="max-w-2xl mx-auto bg-light p-8 rounded-lg shadow-lg animate-scale-in hover:scale-105 transition-transform duration-300">
-            <div className="mb-8">
-              <img 
-                src="/lovable-uploads/a1686a99-749a-46ea-8ee9-a0c44ec4ba78.png"
-                alt="G-Force Portfolio"
-                className="w-full h-auto rounded-lg mb-6 animate-fade-in hover:shadow-xl transition-shadow duration-300"
-              />
-              
-              {isDownloading && (
-                <div className="mb-6 animate-fade-in">
-                  <Progress value={downloadProgress} className="w-full h-2" />
-                  <p className="text-sm text-secondary mt-2">
-                    Downloading: {downloadProgress}%
-                  </p>
-                </div>
-              )}
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-primary mb-4">Professional CV Generation Service</h2>
+            <p className="text-gray-600 mb-4">
+              We help job seekers reduce the cost of creating professional CVs. Our service includes:
+            </p>
+            <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
+              <li>Standardized one-page CV template</li>
+              <li>Professional formatting</li>
+              <li>Easy download options</li>
+              <li>Affordable rate of only R11.45</li>
+            </ul>
+          </div>
 
-              <div className="flex gap-4">
-                <button
-                  onClick={handleView}
-                  className="flex items-center gap-2 px-6 py-3 bg-primary text-white rounded-lg hover:bg-dark transition-colors animate-slide-up"
-                  disabled={isDownloading}
-                >
-                  <Eye size={20} className="animate-pulse" />
-                  View Image
-                </button>
-                <button
-                  onClick={handleDownload}
-                  className="flex items-center gap-2 px-6 py-3 bg-accent text-white rounded-lg hover:bg-accent/80 transition-colors animate-slide-up"
-                  disabled={isDownloading}
-                >
-                  <Download size={20} className="animate-pulse" />
-                  Download Image
-                </button>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <Input required type="text" placeholder="Your full name" />
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
+                <Input required type="email" placeholder="Your email address" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Professional Summary
+              </label>
+              <Textarea
+                required
+                placeholder="Brief professional summary (max 250 words)"
+                className="h-32"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Upload CV
+              </label>
+              <Input required type="file" accept=".pdf,.doc,.docx" />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full bg-accent hover:bg-accent/90 text-white"
+            >
+              Submit CV (R11.45)
+            </Button>
+          </form>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - KZN</h3>
+            <div className="space-y-2 text-gray-600">
+              <p>031 023 0487</p>
+              <p>info@gforcesolutions.org.za</p>
+              <p>Unit 10, Gillitts Centre,</p>
+              <p>4 Clifton Road</p>
+              <p>Gillitts, 3610</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - Gauteng</h3>
+            <div className="space-y-2 text-gray-600">
+              <p>031 023 0487</p>
+              <p>info@gforcesolutions.org.za</p>
+              <p>435 Strauss Crescent</p>
+              <p>Wadeville, Germiston 07</p>
+              <p>1422</p>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-md p-6">
+            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - Pretoria</h3>
+            <div className="space-y-2 text-gray-600">
+              <p>031 023 0487</p>
+              <p>info@gforcesolutions.org.za</p>
+              <p>1204 Twin Palms</p>
+              <p>Olympus, Pretoria East</p>
+              <p>0184</p>
             </div>
           </div>
         </div>
