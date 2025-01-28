@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 import confetti from 'canvas-confetti';
 
 const Portfolio = () => {
   const { toast } = useToast();
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [generateProgress, setGenerateProgress] = useState(0);
-  const [isUploading, setIsUploading] = useState(false);
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [viewProgress, setViewProgress] = useState(0);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+  const [isViewing, setIsViewing] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
-  const handleUpload = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsUploading(true);
-    setUploadProgress(0);
+  const handleView = async () => {
+    setIsViewing(true);
+    setViewProgress(0);
 
     const interval = setInterval(() => {
-      setUploadProgress((prev) => {
+      setViewProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setIsUploading(false);
+          setIsViewing(false);
           confetti({
             particleCount: 100,
             spread: 70,
@@ -30,7 +27,7 @@ const Portfolio = () => {
           });
           toast({
             title: "Success!",
-            description: "Your CV has been uploaded successfully",
+            description: "Portfolio loaded successfully",
           });
           return 100;
         }
@@ -39,16 +36,15 @@ const Portfolio = () => {
     }, 500);
   };
 
-  const handleGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsGenerating(true);
-    setGenerateProgress(0);
+  const handleDownload = async () => {
+    setIsDownloading(true);
+    setDownloadProgress(0);
 
     const interval = setInterval(() => {
-      setGenerateProgress((prev) => {
+      setDownloadProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setIsGenerating(false);
+          setIsDownloading(false);
           confetti({
             particleCount: 100,
             spread: 70,
@@ -56,7 +52,7 @@ const Portfolio = () => {
           });
           toast({
             title: "Success!",
-            description: "Your CV has been generated. Cost: R11.45",
+            description: "Portfolio downloaded successfully",
           });
           return 100;
         }
@@ -67,84 +63,58 @@ const Portfolio = () => {
 
   return (
     <div className="min-h-screen bg-light pt-32">
-      <div className="max-w-6xl mx-auto space-y-8 px-4">
-        {/* Upload CV Section */}
+      <div className="max-w-6xl mx-auto px-4 space-y-8">
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
-          <h1 className="text-3xl font-bold text-primary mb-6">Upload Your CV (Free)</h1>
-          <p className="text-gray-600 mb-6">Upload your existing CV for free! We'll help you optimize it for better results.</p>
-          
-          <form onSubmit={handleUpload} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload CV
-              </label>
-              <Input required type="file" accept=".pdf,.doc,.docx" />
-            </div>
+              <h1 className="text-3xl font-bold text-primary mb-6">Our Portfolio</h1>
+              <p className="text-gray-600 mb-6">
+                View or download our comprehensive portfolio showcasing our work and achievements.
+              </p>
+              
+              <div className="space-y-6">
+                <div>
+                  <Button
+                    onClick={handleView}
+                    className="w-full bg-accent hover:bg-accent/90 text-white"
+                    disabled={isViewing}
+                  >
+                    View Portfolio
+                  </Button>
+                  {isViewing && (
+                    <div className="mt-2 space-y-2">
+                      <Progress value={viewProgress} className="w-full" />
+                      <p className="text-sm text-gray-600">Loading: {viewProgress}%</p>
+                    </div>
+                  )}
+                </div>
 
-            {isUploading && (
-              <div className="space-y-2">
-                <Progress value={uploadProgress} className="w-full" />
-                <p className="text-sm text-gray-600">Uploading: {uploadProgress}%</p>
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              className="w-full bg-accent hover:bg-accent/90 text-white"
-              disabled={isUploading}
-            >
-              Upload CV
-            </Button>
-          </form>
-        </div>
-
-        {/* Generate CV Section */}
-        <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
-          <h2 className="text-2xl font-bold text-primary mb-6">Generate Professional CV (R11.45)</h2>
-          <p className="text-gray-600 mb-6">Let us help you create a professional CV that stands out!</p>
-          
-          <form onSubmit={handleGenerate} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <Input required type="text" placeholder="Your full name" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <Input required type="email" placeholder="Your email address" />
+                <div>
+                  <Button
+                    onClick={handleDownload}
+                    className="w-full bg-primary hover:bg-primary/90 text-white"
+                    disabled={isDownloading}
+                  >
+                    Download PDF
+                  </Button>
+                  {isDownloading && (
+                    <div className="mt-2 space-y-2">
+                      <Progress value={downloadProgress} className="w-full" />
+                      <p className="text-sm text-gray-600">Downloading: {downloadProgress}%</p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Professional Summary
-              </label>
-              <Textarea
-                required
-                placeholder="Brief professional summary (max 250 words)"
-                className="h-32"
+            <div className="relative">
+              <img
+                src="/lovable-uploads/6d73bc2f-88e3-4d61-9587-8d5908c5767a.png"
+                alt="Portfolio Preview"
+                className="rounded-lg shadow-lg w-full"
               />
             </div>
-
-            {isGenerating && (
-              <div className="space-y-2">
-                <Progress value={generateProgress} className="w-full" />
-                <p className="text-sm text-gray-600">Generating: {generateProgress}%</p>
-              </div>
-            )}
-
-            <Button
-              type="submit"
-              className="w-full bg-accent hover:bg-accent/90 text-white"
-              disabled={isGenerating}
-            >
-              Generate CV
-            </Button>
-          </form>
+          </div>
         </div>
 
         {/* Contact Information */}
