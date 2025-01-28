@@ -28,7 +28,7 @@ export default {
         secondary: "#71797e",
         dark: "#2A3439",
         light: "#F1F0FB",
-        accent: "#F97316",
+        accent: "#74b72e",
       },
       fontFamily: {
         sans: ["SF Pro Display", "Inter", "sans-serif"],
