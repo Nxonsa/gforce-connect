@@ -3,6 +3,9 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
 import Portfolio from './pages/Portfolio';
+import About from './pages/About';
+import Media from './pages/Media';
+import Vacancies from './pages/Vacancies';
 import { Toaster } from './components/ui/toaster';
 
 function App() {
@@ -18,6 +21,9 @@ function App() {
             </>
           } />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/media" element={<Media />} />
+          <Route path="/vacancies" element={<Vacancies />} />
         </Routes>
         <Toaster />
       </div>
