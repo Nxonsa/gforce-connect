@@ -1,6 +1,9 @@
 import Earth3D from './Earth3D';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
       {/* Video Background */}
@@ -34,10 +37,16 @@ const Hero = () => {
             Connecting exceptional talent with outstanding opportunities
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-slide-up delay-200">
-            <button className="px-8 py-3 rounded-full bg-accent text-white hover:bg-accent/90 transition-all duration-300 hover:scale-105 transform hover:shadow-lg">
+            <button 
+              onClick={() => navigate('/vacancies')}
+              className="px-8 py-3 rounded-full bg-accent text-white hover:bg-accent/90 transition-all duration-300 hover:scale-105 transform hover:shadow-lg"
+            >
               Find Jobs
             </button>
-            <button className="px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-accent transition-all duration-300 hover:scale-105 transform hover:shadow-lg">
+            <button 
+              onClick={() => navigate('/submit-cv')}
+              className="px-8 py-3 rounded-full border-2 border-white text-white hover:bg-white hover:text-accent transition-all duration-300 hover:scale-105 transform hover:shadow-lg"
+            >
               Submit CV
             </button>
           </div>

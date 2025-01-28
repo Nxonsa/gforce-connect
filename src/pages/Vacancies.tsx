@@ -1,7 +1,33 @@
-import React from 'react';
-import { Facebook, Instagram, Twitter, Youtube } from 'lucide-react';
+import React, { useState } from 'react';
+import { Facebook, Instagram, Twitter, Youtube, Mail } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 
 const Vacancies = () => {
+  const [email, setEmail] = useState('');
+  const { toast } = useToast();
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      toast({
+        title: "Error",
+        description: "Please enter your email address",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Here you would typically handle the subscription
+    console.log('Subscribing email:', email);
+    toast({
+      title: "Success!",
+      description: "You've successfully subscribed to job notifications",
+    });
+    setEmail('');
+  };
+
   return (
     <div className="min-h-screen bg-white pt-32">
       <div className="container mx-auto px-6">
@@ -10,6 +36,29 @@ const Vacancies = () => {
           <p className="text-xl text-secondary mb-12">
             Follow our social media platforms for the latest job opportunities
           </p>
+
+          {/* Email Subscription */}
+          <div className="max-w-md mx-auto mb-12 bg-accent/5 p-6 rounded-lg">
+            <h2 className="text-2xl font-semibold text-primary mb-4">
+              Stay Updated
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Subscribe to receive notifications about new job opportunities
+            </p>
+            <form onSubmit={handleSubscribe} className="flex gap-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="flex-1"
+              />
+              <Button type="submit" className="bg-accent hover:bg-accent/90">
+                <Mail className="w-4 h-4 mr-2" />
+                Subscribe
+              </Button>
+            </form>
+          </div>
 
           <div className="flex justify-center space-x-6 mb-16">
             <a href="#" className="text-primary hover:text-accent transition-colors">
