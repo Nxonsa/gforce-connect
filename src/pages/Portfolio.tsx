@@ -1,40 +1,111 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import { Progress } from "@/components/ui/progress";
+import confetti from 'canvas-confetti';
 
 const Portfolio = () => {
   const { toast } = useToast();
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [generateProgress, setGenerateProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "CV Submitted",
-      description: "Your CV will be processed. Generation fee: R11.45",
-    });
+    setIsUploading(true);
+    setUploadProgress(0);
+
+    // Simulate upload progress
+    const interval = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsUploading(false);
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+          toast({
+            title: "Success!",
+            description: "Your CV has been uploaded successfully",
+          });
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 500);
+  };
+
+  const handleGenerate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsGenerating(true);
+    setGenerateProgress(0);
+
+    // Simulate generation progress
+    const interval = setInterval(() => {
+      setGenerateProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          setIsGenerating(false);
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+          toast({
+            title: "Success!",
+            description: "Your CV has been generated. Cost: R11.45",
+          });
+          return 100;
+        }
+        return prev + 10;
+      });
+    }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-light p-4 md:p-8">
+    <div className="min-h-screen bg-light p-4 md:p-8 pt-24">
       <div className="max-w-6xl mx-auto space-y-8">
+        {/* Upload CV Section */}
         <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
-          <h1 className="text-3xl font-bold text-primary mb-6">Submit Your CV</h1>
+          <h1 className="text-3xl font-bold text-primary mb-6">Upload Your CV</h1>
+          <p className="text-gray-600 mb-6">Upload your existing CV for free! We'll help you optimize it for better results.</p>
           
-          <div className="mb-8">
-            <h2 className="text-xl font-semibold text-primary mb-4">Professional CV Generation Service</h2>
-            <p className="text-gray-600 mb-4">
-              We help job seekers reduce the cost of creating professional CVs. Our service includes:
-            </p>
-            <ul className="list-disc list-inside text-gray-600 space-y-2 mb-4">
-              <li>Standardized one-page CV template</li>
-              <li>Professional formatting</li>
-              <li>Easy download options</li>
-              <li>Affordable rate of only R11.45</li>
-            </ul>
-          </div>
+          <form onSubmit={handleUpload} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Upload CV
+              </label>
+              <Input required type="file" accept=".pdf,.doc,.docx" />
+            </div>
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+            {isUploading && (
+              <div className="space-y-2">
+                <Progress value={uploadProgress} className="w-full" />
+                <p className="text-sm text-gray-600">Uploading: {uploadProgress}%</p>
+              </div>
+            )}
+
+            <Button
+              type="submit"
+              className="w-full bg-accent hover:bg-accent/90 text-white"
+              disabled={isUploading}
+            >
+              Upload CV (Free)
+            </Button>
+          </form>
+        </div>
+
+        {/* Generate CV Section */}
+        <div className="bg-white rounded-lg shadow-md p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-primary mb-6">Generate Professional CV</h2>
+          <p className="text-gray-600 mb-6">Generate a professional CV for only R11.45! Our service helps create standout CVs.</p>
+          
+          <form onSubmit={handleGenerate} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -61,25 +132,27 @@ const Portfolio = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Upload CV
-              </label>
-              <Input required type="file" accept=".pdf,.doc,.docx" />
-            </div>
+            {isGenerating && (
+              <div className="space-y-2">
+                <Progress value={generateProgress} className="w-full" />
+                <p className="text-sm text-gray-600">Generating: {generateProgress}%</p>
+              </div>
+            )}
 
             <Button
               type="submit"
               className="w-full bg-accent hover:bg-accent/90 text-white"
+              disabled={isGenerating}
             >
-              Submit CV (R11.45)
+              Generate CV (R11.45)
             </Button>
           </form>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        {/* Contact Information */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - KZN</h3>
+            <h3 className="text-xl font-semibold text-primary mb-4">KZN Office</h3>
             <div className="space-y-2 text-gray-600">
               <p>031 023 0487</p>
               <p>info@gforcesolutions.org.za</p>
@@ -90,7 +163,7 @@ const Portfolio = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - Gauteng</h3>
+            <h3 className="text-xl font-semibold text-primary mb-4">Gauteng Office</h3>
             <div className="space-y-2 text-gray-600">
               <p>031 023 0487</p>
               <p>info@gforcesolutions.org.za</p>
@@ -101,7 +174,7 @@ const Portfolio = () => {
           </div>
 
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-xl font-semibold text-primary mb-4">Contact Us - Pretoria</h3>
+            <h3 className="text-xl font-semibold text-primary mb-4">Pretoria Office</h3>
             <div className="space-y-2 text-gray-600">
               <p>031 023 0487</p>
               <p>info@gforcesolutions.org.za</p>
